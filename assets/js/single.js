@@ -1,6 +1,10 @@
 var issueContainerEl = document.querySelector("#issues-container");
 var limitWarningEl = document.querySelector("#limit-warning");
+var repoNameEl = document.querySelector("#repo-name");
 
+//This script finds the issues in the repo selected in homepage.js and creates a list of it's issues, linking to the github pages
+
+//find issues in our given repo
 var getRepoIssues = function(repo) {
     console.log(repo);
     var apiUrl = "https://api.github.com/repos/" + repo + "/issues?direction=asc";
@@ -19,7 +23,7 @@ var getRepoIssues = function(repo) {
             });
         }
         else {
-            alert("There was a problem with your request!");
+            Document.location.replace("./index.html");
         }
     });
 };
@@ -78,8 +82,23 @@ var displayWarning = function(repo) {
     limitWarningEl.appendChild(linkEl);
 };
 
+var getRepoName=function(){
+    var queryString = document.location.search;
+    //?q=value is split at '='
+    //creates 2 values in array, '?' and 'value'
+    //our repo name is located at the 2nd array
+    var repoName= queryString.split("=")[1];
+    if (repoName){
+        //update the page element displaying the repo name
+        repoNameEl.textContent = repoName;
+        getRepoIssues(repoName);
+    } else {
+        document.location.replace("./index.html");
+    }
+};
+
+getRepoName();
 
 
     
-      
-  getRepoIssues("angular/angular");   
+   
