@@ -21,6 +21,7 @@
 
   <main class="flex-row justify-space-between">
     <div class = "col-12 col-md-4">
+      <!--search by name-->
       <div class = "card">
         <h3 class="card-header text-uppercase">Search By User</h3>
         <form id="user-form" class="card-body">
@@ -29,7 +30,17 @@
           <button type= "submit" class="btn">Get User</button>
         </form>
       </div>
+      <!--search by topic-->
+      <div class = "card">
+        <h3 class="card-header text-uppercase">Search By Topic</h3>
+        <div id="language-buttons" class="card-body">
+          <button data-language= "JavaScript" class="btn">JavaScript</button>
+          <button data-language= "HTML" class="btn">HTML</button>
+          <button data-language= "CSS" class="btn">CSS</button>
+        </div>
+      </div>
     </div>
+    
     <div class= "col-12 col-md-8">
       <h2 class="subtitle">Showing Repositories for: <span id="repo-search-term"></span></h2>
       <div id="repos-container" class="list-group"></div>

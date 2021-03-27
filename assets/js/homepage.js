@@ -2,6 +2,7 @@ var userFormEl = document.querySelector("#user-form");
 var nameInputEl= document.querySelector("#username");
 var repoContainerEl = document.querySelector("#repos-container");
 var repoSearchTerm = document.querySelector("#repo-search-term");
+var languageButtonsEl = document.querySelector("#language-buttons");
 
 //This script finds the repos of a user, and creates links to those repos
 
@@ -92,4 +93,32 @@ var displayRepos = function(repos, searchTerm){
     }
 }
 
+var getFeaturedRepos = function(language) {
+    //searches featured repositories written in our specified language and sorts them by number of issues
+    var apiUrl= "https://api.github.com/search/repositories?q=" + language + "+is:featured&sort=help-wanted-issues";
+    fetch(apiUrl).then(function(response) {
+        if(response.ok){
+            //extract JSON from the HTTP response
+            response.json().then(function(data) {
+                displayRepos(data.items, language);
+            });
+        } else {
+            alert("Error: "+ response.statusText);
+        }
+    });
+}
+
+var buttonClickHandler = function(event) {
+    var language = event.target.getAttribute("data-language");
+    if(language) {
+        getFeaturedRepos(language);
+
+        //clear old content
+        //even though this is written after getFeaturedRepos(language), 
+        //because that method call is asynchronus the following will execute first while it processes
+        repoContainerEl.textContent="";
+    }
+};
+
 userFormEl.addEventListener("submit", formSubmitHandler);
+languageButtonsEl.addEventListener("click", buttonClickHandler);
